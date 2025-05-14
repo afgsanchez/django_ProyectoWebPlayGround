@@ -41,14 +41,14 @@
                 </li>
               {% else %}
                 <li class="nav-item">
-                  {% comment %} <a class="nav-link" href="{% url 'logout' %}">Salir</a> {% endcomment %}
-                  <form id="logout-form" method="post" action="{% url 'logout' %}">
+                  <a class="nav-link" href="{% url 'profile' %}">Perfil</a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Salir
+                  </a>
+                  <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: none;">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-link nav-link" style="padding: 0; background: none; border: none; color: #d1d1d1; cursor: pointer;"
-                      onmouseover="this.style.color='#f2f2f2'"
-                      onmouseout="this.style.color='#d1d1d1'" >
-                      Salir
-                    </button>
                   </form>
                 </li>
               {% endif %}
