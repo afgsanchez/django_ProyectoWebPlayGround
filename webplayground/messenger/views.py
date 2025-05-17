@@ -1,12 +1,12 @@
-from django.shortcuts import render
-from django.views.generic.list import ListView
+from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 from django.views.generic import TemplateView
 from .models import Thread, Message
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import Http404, JsonResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 
 # Create your views here.
@@ -39,3 +39,8 @@ def add_message(request, pk):
 
     return JsonResponse(json_response)
 
+@login_required()
+def start_thread(request, username):
+    user = get_object_or_404(User, username=username)
+    thread = Thread.objects.find_or_create(user, request.user)
+    return redirect(reverse_lazy('messenger:detail', args=[thread.pk]))
