@@ -29,8 +29,14 @@ class ThreadManager(models.Manager):
 class Thread(models.Model):
     users = models.ManyToManyField(User, related_name='threads')
     messages = models.ManyToManyField(Message)
+    # Esto es para que el mensaje se muestre en el orden en que fue creado
+    # y no en el orden en que fue añadido al hilo
+    updated = models.DateTimeField(auto_now=True)
 
     objects = ThreadManager()
+
+    class Meta:
+        ordering = ['-updated']
 
 
 
@@ -50,5 +56,8 @@ def messages_changed(sender, **kwargs):
 
     # Buscar los mensajes de false_pk_set que sí estan en pk_set y los borramos de pk_set
     pk_set.difference_update(false_pk_set)
+
+    # Forzar la actualizacion haciendo un save()
+    instance.save()
 
 m2m_changed.connect(messages_changed, sender=Thread.messages.through)

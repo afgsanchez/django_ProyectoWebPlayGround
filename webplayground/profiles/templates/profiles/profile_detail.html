@@ -16,8 +16,8 @@
                 <img src="{% static 'registration/img/no-avatar.jpg' %}" class="img-fluid">
               {% endif %}
               {% if request.user != profile.user %}
-                <a class="btn btn-secondary btn-sm btn-block mt-3 disabled" title="Funcionalidad no disponible aún">
-                {% comment %} <a href="{% url 'messenger:start' profile.user.username %}" class="btn btn-primary btn-sm btn-block mt-3"> {% endcomment %}
+                {% comment %} <a class="btn btn-secondary btn-sm btn-block mt-3 disabled" title="Funcionalidad no disponible aún"> {% endcomment %}
+                <a href="{% url 'messenger:start' profile.user.username %}" class="btn btn-primary btn-sm btn-block mt-3">
                   Enviar mensaje
                 </a>
               {% endif %}

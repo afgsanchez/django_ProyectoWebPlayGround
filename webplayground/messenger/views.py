@@ -14,6 +14,7 @@ from django.shortcuts import get_object_or_404, redirect
 class ThreadList(TemplateView):
     template_name = "messenger/thread_list.html"
 
+
 @method_decorator(login_required, name="dispatch")
 class ThreadDetail(DetailView):
     model = Thread
@@ -33,6 +34,8 @@ def add_message(request, pk):
             message = Message.objects.create(user=request.user, content=content)
             thread.messages.add(message)
             json_response['created'] = True
+            if len(thread.messages.all()) is 1:
+                json_response['first'] = True
 
     else:
         raise Http404("User is not authenticated")
